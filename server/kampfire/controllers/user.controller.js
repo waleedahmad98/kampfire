@@ -51,4 +51,18 @@ const authorizeLoginSession = async (email, accessToken) => {
     return {"code":"1", "status":"success"}
 }
 
-module.exports = { createUser, matchUserPassword, authorizeLoginSession };
+const verifyLoginSession = async (email, accessToken) => {
+    try {
+        var response = await accessModel.findOne({ 'email': email, 'token': accessToken });
+        if (response === null){
+            return {"status":"401", "code":"-1"}
+        }
+        return {"status":"200", "code":"1"}
+
+    }
+    catch (err) {
+        return { "status": err, "code": "-1" }
+    }
+}
+
+module.exports = { createUser, matchUserPassword, authorizeLoginSession, verifyLoginSession };

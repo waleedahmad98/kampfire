@@ -10,18 +10,21 @@ router.post('/register', function (req, res) {
 });
 
 router.post('/login', async function (req, res) {
-  try {
     let stat = await DBFunctions.matchUserPassword(req.body.email);
-
     stat.accessToken = jwt.sign(req.body.email, process.env.SECRET_KEY);
     await DBFunctions.authorizeLoginSession(req.body.email, stat.accessToken);
-
     res.send(stat);
-  }
-  catch (err) { 
-    res.send({"code":"-1", "status":err})
-  }
 });
+
+router.post('/', async function (req, res) {
+    let stat = await DBFunctions.verifyLoginSession(req.body.email, req.body.token);
+    res.send(stat);
+});
+
+router.post('/gauth/signin', async function (req, res) {
+  console.log(req);
+});
+
 
 
 module.exports = router;
