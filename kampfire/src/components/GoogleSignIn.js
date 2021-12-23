@@ -1,9 +1,19 @@
+import axios from 'axios';
 import React from 'react'
 import GoogleLogin from "react-google-login";
 
 export default function GoogleSignIn() {
     const responseGoogle = (res) => {
-        console.log(res.profileObj)
+       const creds = {
+            email:res.profileObj.email,
+            fname:res.profileObj.givenName,
+            lname:res.profileObj.familyName
+        }
+        axios.post("http://localhost:8000/gauth/signin", creds).then(res => {
+            console.log(res);
+            localStorage.setItem("userEmail", res.data.email);
+            localStorage.setItem("accessToken", res.data.token);
+        })
     }
 
     return (

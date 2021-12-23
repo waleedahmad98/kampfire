@@ -15,6 +15,7 @@ body, html {
 
 #root{
   height: 100%;
+  font-family: 'open-s-med';
 }
 
 .credential-container{
@@ -88,3 +89,44 @@ body, html {
   font-size: 4rem;
   color: white;
 }
+
+.navbar {
+  background-color: rgb(28, 32, 59) !important;
+}
+
+.nav-btn{
+  color: white !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.nav-btn:hover{
+  color: rgb(255, 123, 0) !important;
+  text-decoration: none;
+  
+}
+
+.pfp:hover{
+  filter:opacity(0.5);
+  cursor: pointer;
+}
+
+#textbox {
+  width: 100%;
+  max-width: 100%;
+  resize: none;
+}
+
+.post-creator-container{
+  background-color: white;
+  border-radius: 15px;
+}
+
+.smallbtn{
+  cursor: pointer;
+}
+
+.smallbtn:active{
+  font-size: small;
+}
+

@@ -1,5 +1,6 @@
 import './App.css';
 import LoginPage from './components/LoginPage';
+import MainPage from './components/MainPage';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.css";
@@ -28,7 +29,7 @@ function App() {
 
   return (
     <div className="h-100">
-      {login === true ? <h1>okay</h1> : <LoginPage setLogin = {setLogin} />}
+      {login === true ? <MainPage /> : <LoginPage setLogin = {setLogin} />}
       
     </div>
   );

@@ -34,7 +34,7 @@ export default class Signin extends Component {
                 if (hpassword === res.data.data.password) {
                     localStorage.setItem("accessToken", res.data.accessToken);
                     localStorage.setItem("userEmail", this.state.email);
-                    this.props.setLogin(localStorage.getItem('accessToken'));
+                    this.props.setLogin(true);
                 }
                 else {
                     alert("Your password is incorrect")
