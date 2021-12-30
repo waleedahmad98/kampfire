@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "set DEBUG=kampfire:* & nodemon ./bin/www",
-    "build": "npm --prefix webapp run build"
+    "build": "npm --prefix webapp install && npm --prefix webapp run build"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
