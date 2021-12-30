@@ -39,7 +39,7 @@ export default function CreatePost() {
 
                 <div class="form-group mb-3">
                     <label for="image" className='smallbtn'><i className='fas fa-paperclip'></i> {image === null ? "" : image.name} </label>
-                    <input type="file" class="form-control-file" id="image" style={{display: "none"}} onChange={(e)=>{setImage(e.target.files[0])}}/>
+                    <input type="file" class="form-control-file" id="image" style={{display: "none"}} onChange={(e)=>{setImage(e.target.files[0])}} accept="image/png, image/jpeg"/>
                 </div>
 
                 <button type="submit" class="btn" style={{ backgroundColor: "rgb(255, 123, 0)", color: 'white' }}>Share</button>

@@ -77,7 +77,7 @@ export default function ProfilePage() {
                                 <div className='pfp' onClick={() => { inputFile.current.click() }}>
                                     {image === null ? <img src={Placeholder} className='mt-5' style={{ height: "200px", width: "200px", borderRadius: "100px", backgroundColor: "white" }} /> : <img src={`/profilePictures/${image}`} className='mt-5' style={{ height: "200px", width: "200px", borderRadius: "100px", backgroundColor: "white" }} />}
                                     
-                                    <input type="file" ref={inputFile} style={{ display: "none" }} onChange={pictureChange} name="pfp-upload" ></input>
+                                    <input type="file" ref={inputFile} style={{ display: "none" }} onChange={pictureChange} name="pfp-upload" accept="image/png, image/jpeg" ></input>
                                 </div>
                             </div>
                         </div>

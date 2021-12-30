@@ -3,7 +3,9 @@ var userController = require("../controllers/user.controller");
 var postController = require("../controllers/post.controller")
 var router = express.Router();
 var multer = require('multer');
+var fs = require('fs');
 
+fs.mkdirSync('storage/profilepictures',{recursive: true})
 var upload = multer({ dest: 'storage/profilepictures' });
 
 router.get('/details/:email', async function (req, res, next) {
@@ -148,7 +150,6 @@ router.get("/details/profile/:email/:useremail", async function (req, res){
     let temp = [req.params["email"]];
     let posts = await postController.getMainPosts(temp);
     let resp = {"user":user, "image":image, "posts":posts}
-    console.log(resp)
 
     res.send(resp);
   }

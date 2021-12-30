@@ -44,7 +44,7 @@ export default function Post(props) {
             </div>
             {props.data.image !== null ? <img class="card-img-top" src={`/uploads/${props.data.image}`} /> : <></>}
             <div class="card-body">
-                <p class="card-text">{props.data.text}</p>
+                {props.data.text !== "null" && <p class="card-text">{props.data.text}</p>}
                 <div className='d-flex flex-row align-items-center'>
                     <button class="btn btn-primary" style={{ borderRadius: "100px" }} onClick={() => likePost(props.data)}>{like}</button>
                     <span className='ms-2'>{likeCount} Likes</span>

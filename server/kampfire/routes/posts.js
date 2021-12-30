@@ -3,7 +3,8 @@ var userController = require("../controllers/user.controller");
 var postController = require("../controllers/post.controller");
 var router = express.Router();
 var multer = require('multer');
-
+var fs = require('fs')
+fs.mkdirSync('storage/sharedpictures', {recursive: true})
 var upload = multer({ dest: 'storage/sharedpictures/' });
 
 router.post("/create", upload.single('image'), async function (req, res) {
