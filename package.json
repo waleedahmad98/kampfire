@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "set DEBUG=kampfire:* & nodemon ./bin/www"
+    "start": "set DEBUG=kampfire:* & nodemon ./bin/www",
+    "build": "npm --prefix webapp run build"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
