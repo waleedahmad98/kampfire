@@ -7,19 +7,19 @@ export default function PendingFriends() {
     const [results, setResults] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:8000/users/pending-requests/${localStorage.getItem("userEmail")}`, { headers: { "Authorization": localStorage.getItem("accessToken") } }).then(res => {
+        axios.get(`/users/pending-requests/${localStorage.getItem("userEmail")}`, { headers: { "Authorization": localStorage.getItem("accessToken") } }).then(res => {
             setResults(res.data.data);
         })
     }, [])
 
     const rejectRequest = (r) => {
-        axios.delete(`http://localhost:8000/users/pending/${localStorage.getItem("userEmail")}/${r.email}`, { headers: { "Authorization": localStorage.getItem("accessToken") } }).then(res => {
+        axios.delete(`/users/pending/${localStorage.getItem("userEmail")}/${r.email}`, { headers: { "Authorization": localStorage.getItem("accessToken") } }).then(res => {
             window.location = "/pending-requests"
         })
     }
 
     const acceptRequest = (r) => {
-        axios.put(`http://localhost:8000/users/pending/${localStorage.getItem("userEmail")}/${r.email}`, {},{ headers: { "Authorization": localStorage.getItem("accessToken") } }).then(res => {
+        axios.put(`/users/pending/${localStorage.getItem("userEmail")}/${r.email}`, {},{ headers: { "Authorization": localStorage.getItem("accessToken") } }).then(res => {
             window.location = "/pending-requests"
         })
     }

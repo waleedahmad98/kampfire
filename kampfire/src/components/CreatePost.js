@@ -13,9 +13,10 @@ export default function CreatePost() {
         formData.append("image", image);
         formData.append("text", text);
         formData.append("author", localStorage.getItem("userEmail"));
-        axios.post("http://localhost:8000/posts/create", formData, {
+        axios.post("/posts/create", formData, {
             headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
+            'Authorization': localStorage.getItem("accessToken")
             }
         }).then((res) => {
             if (res.data.code === "-1") {
@@ -23,12 +24,14 @@ export default function CreatePost() {
             }
             else {
                 alert("Successfully created post!");
+                window.location = "/";
+
             }
         })
     }
 
     return (
-        <div className='post-creator-container py-4 px-4 mt-3 w-50 mx-auto'>
+        <div className='post-creator-container py-4 px-4 mt-3 mx-auto'>
             <form onSubmit={handleSubmit}>
                 <div class="mb-3 mt-3">
                     <textarea placeholder='Share your story!' class="form-control" id="textbox" onChange={(e)=>{setText(e.target.value)}}/>

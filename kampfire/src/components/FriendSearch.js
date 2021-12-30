@@ -9,20 +9,22 @@ export default function FriendSearch() {
         e.preventDefault();
 
         if (e.target.value !== "") {
-            axios.get(`http://localhost:8000/users/${e.target.value}`).then((res) => {
-                setResults(res.data);
-                console.log(results)
+            axios.get(`/users/${e.target.value}`).then((res) => {
+                let arr = res.data.filter(function(item) {
+                    return item !== localStorage.getItem("userEmail");
+                })
+                setResults(arr);
             })
         }
     }
 
     const sendFriendRequest = (r) => {
-        axios.post(`http://localhost:8000/users/freq`, {email: localStorage.getItem("userEmail"), to: r.email, token: localStorage.getItem("accessToken") });
+        axios.post(`/users/freq`, {email: localStorage.getItem("userEmail"), to: r.email, token: localStorage.getItem("accessToken") });
     }
 
     return (
         <div>
-            <div className='post-creator-container py-4 px-4 mt-3 w-50 mx-auto'>
+            <div className='post-creator-container py-4 px-4 mt-3 mx-auto'>
                 <form>
                     <div class="mb-3 mt-3">
                         <input type="text" placeholder='Find more kampers...' class="form-control" id="search" onChange={searcher} />
@@ -30,7 +32,7 @@ export default function FriendSearch() {
                 </form>
             </div>
 
-            <div className='post-creator-container py-4 px-4 mt-3 w-50 mx-auto'>
+            <div className='post-creator-container py-4 px-4 mt-3 mx-auto'>
                 {results.length > 0 ? results.map(r => (
                     <div class="card mb-2" style={{ width: "100%" }}>
                         <div className='d-flex flex-row'>

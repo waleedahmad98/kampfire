@@ -46,7 +46,7 @@ export default class Signup extends Component {
                     hpassword,
                     salt
                 };
-                // axios.post("http://127.0.0.1:8000/register", creds).then((res) => {
+                // axios.post("/register", creds).then((res) => {
                 //     if (res.data.code === "-1"){
                 //         alert(res.data.status);
                 //     }

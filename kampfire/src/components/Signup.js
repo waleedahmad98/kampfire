@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
+import GoogleSignUp from './GoogleSignUp';
 
 export default class Signup extends Component {
     constructor(props) {
@@ -27,7 +28,10 @@ export default class Signup extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-
+        if (this.state.password.length < 4){
+            alert("Password must be atleast 4 characters")
+            return
+        }
         if (this.state.extraCred === 0) {
             const { password, cfpassword } = this.state;
             if (password === cfpassword) {
@@ -53,17 +57,19 @@ export default class Signup extends Component {
                     hpassword,
                     salt
                 };
-                axios.post("http://127.0.0.1:8000/register", creds).then((res) => {
-                    if (res.data.code === "-1") {
-                        alert(res.data.status);
-                    }
+                axios.post("/register", creds).then((res) => {
+                    alert("created account!")
+                }).catch(err => {
+                    alert(err)
                 });
-                console.log(creds);
                 this.setState({ extraCred: 0 })
             }
         }
     }
 
+    update = (state) => {
+        this.setState(state);
+    }
 
     render() {
         return (
@@ -102,14 +108,14 @@ export default class Signup extends Component {
                             </div>
                             <div class="mb-3">
                                 <label for="birthday" class="form-label">Birthday</label>
-                                <input type="date" id="dob" name="dob" onChange={this.handleChange} class="form-control" id="lname" />
+                                <input type="date" id="dob" name="dob" onChange={this.handleChange} class="form-control" />
                             </div>
                         </>
                     }
 
                     <div className='d-flex flex-row'>
                         <button type="submit" className="btn">Submit</button>
-                        {this.state.extraCred === 1 ? <button style={{ backgroundColor: "rgb(28, 32, 59)" }} className="btn ms-3" onClick={() => { this.setState({ extraCred: 0 }) }}>Go Back</button> : <></>}
+                        {this.state.extraCred === 1 ? <button style={{ backgroundColor: "rgb(28, 32, 59)" }} className="btn ms-3" onClick={() => { this.setState({ extraCred: 0 }) }}>Go Back</button> : <><GoogleSignUp setState = {this.update}/></>}
 
                     </div>
                 </form>

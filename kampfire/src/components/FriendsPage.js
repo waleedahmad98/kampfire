@@ -8,7 +8,7 @@ export default function FriendsPage() {
     const navigate = useNavigate();
     const [pending, setPending] = useState(0);
     useEffect(()=>{
-        axios.get(`http://localhost:8000/users/pending/${localStorage.getItem('userEmail')}`, { 
+        axios.get(`/users/pending/${localStorage.getItem('userEmail')}`, { 
             headers: {Authorization: localStorage.getItem("accessToken")} 
         }).then(res => {
             setPending(res.data.count);
@@ -23,7 +23,7 @@ export default function FriendsPage() {
                     <button className='btn btn-primary' onClick = {()=>{
                         navigate("/pending-requests")
                     }}>Requests ({pending})</button>
-                    <button className='btn btn-primary'>My Friends</button>
+                    <button className='btn btn-primary' onClick={()=>{navigate(`/friends/${localStorage.getItem("userEmail")}`)}}>My Friends</button>
                 </div>
                 <FriendSearch />
             </div>

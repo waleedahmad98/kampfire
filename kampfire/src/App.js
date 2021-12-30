@@ -16,15 +16,12 @@ function App() {
       email: localStorage.getItem("userEmail"),
       token: localStorage.getItem("accessToken")
     };
-    axios.post("http://127.0.0.1:8000/", creds).then((res) => {
-      console.log(res)
-      if (res.data.status === "200") {
+    axios.post("/", creds).then((res) => {
+      if (res.status === 200) {
         setLogin(true);
       }
-      else{
-        setLogin(false);
-      }
-    });
+    }).catch(err => {
+      setLogin(false)});
   }, [])
 
   return (

@@ -4,37 +4,54 @@ import { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import Placeholder from '../assets/images/placeholder.png'
+import EditProfile from './EditProfile'
+import UserPost from './UserPost'
 
 export default function ProfilePage() {
     const [name, setName] = useState(null);
+    const [image, setImage] = useState(null);
     const [dob, setDob] = useState(null);
     const [email, setEmail] = useState(null);
     const inputFile = useRef(null);
-
+    const [editMode, setEditMode] = useState(false);
+    const [user, setUser] = useState(null);
+    const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-        axios.post("http://localhost:8000/users/details", { email: localStorage.getItem("userEmail"), token: localStorage.getItem("accessToken") }).then((res) => {
-            if (res.data.status === "401") {
-                navigate("/");
-            }
-            else {
-                console.log(res.data)
-                setName(res.data.data.firstname + " " + res.data.data.lastname);
-                setEmail(res.data.data.email);
-                setDob(res.data.data.dob.toString().split('T')[0]);
-            }
+        axios.get(`/users/details/${localStorage.getItem("userEmail")}`, { headers: { "Authorization": localStorage.getItem("accessToken") } }).then((res) => {
+            setUser(res.data.data)
+            setName(res.data.data.firstname + " " + res.data.data.lastname);
+            setEmail(res.data.data.email);
+            setDob(res.data.data.dob.toString().split('T')[0]);
+        }).catch(err => {
+            alert(err)
+            navigate('/');
         })
+
+        axios.get(`/posts/single/${localStorage.getItem("userEmail")}`, { headers: { "Authorization": localStorage.getItem("accessToken") } }).then((res) => {
+            setPosts(res.data)
+        }).catch(err => {
+            alert(err)
+        })
+
+        axios.get(`/users/pfp/${localStorage.getItem("userEmail")}`, { headers: { "Authorization": localStorage.getItem("accessToken") } }).then((res) => {
+            setImage(res.data);
+            console.log(image)
+        }).catch(err => {
+            alert(err)
+        })
+
     }, [])
+
 
     const pictureChange = (e) => {
         e.preventDefault();
 
         let formData = new FormData();
-        console.log(e.target.files[0])
         formData.append('email', localStorage.getItem("userEmail"));
         formData.append('token', localStorage.getItem("accessToken"));
         formData.append('image', e.target.files[0]);
-        axios.post("http://127.0.0.1:8000/users/pfpupload", formData, {
+        axios.post("/users/pfpupload", formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -51,31 +68,46 @@ export default function ProfilePage() {
 
     return (
         <div>
-            <NavBar />
-            <div className='container'>
-                <div className='row'>
-                    <div className='d-flex justify-content-center'>
-                        <div className='pfp' onClick={() => { inputFile.current.click() }}>
-                            <img src={Placeholder} className='mt-5' style={{ height: "200px", width: "200px", borderRadius: "100px", backgroundColor: "white" }} />
-                            <input type="file" ref={inputFile} style={{ display: "none" }} onChange={pictureChange } name="pfp-upload" ></input>
+            {editMode === false ?
+                <>
+                    <NavBar />
+                    <div className='container'>
+                        <div className='row'>
+                            <div className='d-flex justify-content-center'>
+                                <div className='pfp' onClick={() => { inputFile.current.click() }}>
+                                    {image === null ? <img src={Placeholder} className='mt-5' style={{ height: "200px", width: "200px", borderRadius: "100px", backgroundColor: "white" }} /> : <img src={`/profilePictures/${image}`} className='mt-5' style={{ height: "200px", width: "200px", borderRadius: "100px", backgroundColor: "white" }} />}
+                                    
+                                    <input type="file" ref={inputFile} style={{ display: "none" }} onChange={pictureChange} name="pfp-upload" ></input>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='row text-center mt-4'>
+                            <h1 style={{ fontFamily: "open-s-bol" }}>{name}</h1>
+                        </div>
+                        <div className='row mt-4'>
+                            <div className='d-flex flex-row justify-content-around' style={{ fontFamily: "open-s-med" }}>
+                                <div className='d-flex flex-row align-items-center'>
+                                    <i class="fas fa-at me-2"></i>
+                                    <span>{email}</span>
+                                </div>
+                                <div className='d-flex flex-row align-items-center'>
+                                    <i class="fas fa-birthday-cake me-2"></i>
+                                    <span>{dob}</span>
+                                </div>
+                                <div className='d-flex flex-row align-items-center'>
+                                    <button className='btn btn-primary' onClick={() => {
+                                        setEditMode(true)
+                                    }}>Edit Profile</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='d-flex flex-column align-items-center mt-3'>
+                            {posts.length > 0 ? posts.map(p => <UserPost data={p} />) : <></>
+                            }
                         </div>
                     </div>
-                </div>
-                <div className='row text-center mt-4'>
-                    <h1 style={{ fontFamily: "open-s-bol" }}>{name}</h1>
-                </div>
-                <div className='row mt-4'>
-                    <div className='d-flex flex-row justify-content-around' style={{ fontFamily: "open-s-med" }}>
-                        <div className='d-flex flex-row'>
-                            <p>{email}</p>
-                        </div>
-                        <div className='d-flex flex-row'>
-                            <p>{dob}</p>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
+                </>
+                : <><NavBar /><EditProfile user={user} setEditMode={setEditMode} /></>}
         </div>
     )
 }

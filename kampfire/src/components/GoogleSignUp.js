@@ -2,19 +2,9 @@ import axios from 'axios';
 import React from 'react'
 import GoogleLogin from "react-google-login";
 
-export default function GoogleSignIn() {
+export default function GoogleSignUp({setState}) {
     const responseGoogle = (res) => {
-        console.log(res)
-       const creds = {
-            email:res.profileObj.email,
-            fname:res.profileObj.givenName,
-            lname:res.profileObj.familyName
-        }
-        axios.post("/gauth/signin", creds).then(res => {
-            console.log(res);
-            localStorage.setItem("userEmail", res.data.email);
-            localStorage.setItem("accessToken", res.data.token);
-        })
+        setState({email:res.profileObj.email, fname: res.profileObj.givenName, lname: res.profileObj.familyName})
     }
 
     return (
@@ -22,7 +12,7 @@ export default function GoogleSignIn() {
             <GoogleLogin
                 className='ms-3'
                 clientId="17124376432-57ehsbmounjrt2an7fd7g00gabm0cihm.apps.googleusercontent.com"
-                buttonText="Login with Google"
+                buttonText="Sign Up with Google"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}

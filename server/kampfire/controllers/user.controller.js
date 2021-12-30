@@ -2,8 +2,10 @@ var UserModel = require('../models/user.model');
 const userModel = require('../models/user.model');
 const userpfpModel = require('../models/userpfp.model');
 const pendingreqModel = require("../models/pendingrequests.model");
+const rpassModel = require("../models/resetpass.model")
 const friendModel = require("../models/friends.model");
 var jwt = require('jsonwebtoken');
+var crypto = require('crypto');
 
 const createUser = async (email, fname, lname, dob, hpassword, salt) => {
     var response = await UserModel.findOne({ 'email': `${email}` }, 'salt password');
@@ -46,7 +48,7 @@ const matchUserPassword = async (email) => {
 const verifyLoginSession = async (email, accessToken) => {
     try {
         const verifier = jwt.verify(accessToken, process.env.SECRET_KEY);
-        if (email === verifier){
+        if (email === verifier) {
             return { "status": "200", "code": "1" }
         }
         else {
@@ -54,7 +56,7 @@ const verifyLoginSession = async (email, accessToken) => {
         }
     }
     catch (err) {
-        return { "status": err, "code": "-1" }
+        return { "status": 401, "code": "-1" }
     }
 }
 
@@ -76,7 +78,7 @@ const getUser = async (email) => {
     try {
         var response = await userModel.findOne({ 'email': email }, 'email firstname lastname fullname dob');
         if (response === null) {
-            return { "status": "401", "code": "-1" }
+            return { "status": "no user found", "code": "-1" }
         }
         return { "status": "200", "code": "1", "data": response }
 
@@ -87,6 +89,7 @@ const getUser = async (email) => {
 }
 
 const profilePicture = async (email, imageName) => {
+    await userpfpModel.deleteOne({email:email});
     const savePfp = new userpfpModel({
         email: email,
         filename: imageName
@@ -98,13 +101,13 @@ const profilePicture = async (email, imageName) => {
 }
 
 const fuzzySearchName = async (keyword) => {
-    let stat = await userModel.find({ fullname:  { "$regex": keyword, "$options": "i" }})
+    let stat = await userModel.find({ fullname: { "$regex": keyword, "$options": "i" } })
     return stat;
 }
 
 const insertFriendRequest = async (email, to) => {
-    let resp = await pendingreqModel.findOne({email:to, from: email});
-    if (resp === null){
+    let resp = await pendingreqModel.findOne({ email: to, from: email });
+    if (resp === null) {
         const req = new pendingreqModel({
             email: to,
             from: email
@@ -114,33 +117,33 @@ const insertFriendRequest = async (email, to) => {
         })
         return { "message": "friend request sent!", "code": "1" };
     }
-    else{
+    else {
         return { "message": "you have already sent this user a request.", "code": "-1" };
     }
 }
 
 const getPendingRequestsCount = async (email) => {
-    let resp = await pendingreqModel.count({email: email})
-    return {"count":resp};
+    let resp = await pendingreqModel.count({ email: email })
+    return { "count": resp };
 }
 
 const getPendingRequests = async (email) => {
-    let resp = await pendingreqModel.find({email: email})
+    let resp = await pendingreqModel.find({ email: email })
     let temp = [];
-    for (var i=0; i<resp.length; i++){
+    for (var i = 0; i < resp.length; i++) {
         const user = await (await getUser(resp[i].from)).data;
         temp.push(user)
     }
-    return {"data":temp}
+    return { "data": temp }
 }
 
 const rejectRequest = async (email, from) => {
-    await pendingreqModel.deleteOne({email: email, from: from})
+    await pendingreqModel.deleteOne({ email: email, from: from })
 }
 
 const acceptRequest = async (email, from) => {
-    let resp = await friendModel.findOne({email: email}, 'friends');
-    if (resp === null){
+    let resp = await friendModel.findOne({ email: email }, 'friends');
+    if (resp === null) {
         let temp = []
         temp.push(from);
         new friendModel({
@@ -152,12 +155,109 @@ const acceptRequest = async (email, from) => {
     }
     else {
         let temp = resp;
-        if (temp.includes(from) === false){
+        if (temp.includes(from) === false) {
             temp.push(from);
-            await friendModel.updateOne({email: email}, {friends: temp});
+            await friendModel.updateOne({ email: email }, { friends: temp });
         }
 
     }
 }
 
-module.exports = { createUser, matchUserPassword, verifyLoginSession, isExist, getUser, profilePicture, fuzzySearchName, insertFriendRequest, getPendingRequestsCount, getPendingRequests, rejectRequest, acceptRequest };
+const getFriends = async (email) => {
+    let resp = await friendModel.findOne({ email: email }, 'friends');
+    let friends = []
+    for (let i = 0; i < resp.friends.length; i++) {
+        let friend = await getUser(resp.friends[i]);
+        friends.push({ "email": friend.data.email, "name": friend.data.fullname })
+    }
+    return friends
+}
+
+const getFriendEmails = async (email) => {
+    let resp = await friendModel.findOne({ email: email }, 'friends');
+    return resp.friends
+}
+
+const removeFriend = async (email1, email2) => {
+    let friend1 = await friendModel.findOne({ email: email1 }, 'friends');
+    let friend2 = await friendModel.findOne({ email: email2 }, 'friends');
+    friend1 = friend1.friends;
+    friend2 = friend2.friends;
+
+    friend1 = friend1.filter(friend => friend !== email2);
+    friend2 = friend2.filter(friend => friend !== email1);
+
+
+    await friendModel.updateOne({ email: email1 }, { 'friends': friend1 });
+    await friendModel.updateOne({ email: email2 }, { 'friends': friend2 });
+
+    return 200;
+}
+
+const editUser = async (email, firstname, lastname, dob) => {
+    try {
+        await userModel.updateOne({ email: email }, { firstname: firstname, lastname: lastname, dob: dob, fullname: firstname + " " + lastname })
+        return 200;
+    }
+    catch (err) {
+        return 500
+    }
+
+}
+
+const updatePassword = async (oldpass, newpass, newsalt, email) => {
+    try {
+        await userModel.updateOne({ email: email, password: oldpass }, { password: newpass, salt: newsalt })
+        return 200;
+    }
+    catch (err) {
+        return 500
+    }
+}
+
+const updatePasswordForgotten = async (newpass, newsalt, email) => {
+    try {
+        await userModel.updateOne({ email: email}, { password: newpass, salt: newsalt })
+        await rpassModel.deleteOne({ email: email})
+        return 200;
+    }
+    catch (err) {
+        return 500
+    }
+}
+
+const verifyAccess = async (token) => {
+    try{
+        let resp = await rpassModel.findOne({token: token}, 'email');
+        if (resp === null){
+            return {status: "invalid"}
+        }
+        else{
+            return resp
+        }
+    }
+    catch (err){
+        return 500
+    }
+}
+
+const generatePasswordResetToken = async (email) => {
+    
+    let token = crypto.randomBytes(8).toString('hex');
+    new rpassModel({email: email, token: token}).save((err, saved)=>{
+        console.log(saved)
+    })
+    return token;
+
+}
+
+const getProfilePicture = async (email) => {
+    let picture = await userpfpModel.findOne({email : email}, 'filename')
+    
+    if (picture !== null)
+        return picture.filename
+    else
+        return null
+}
+
+module.exports = { createUser, matchUserPassword, verifyLoginSession, isExist, getUser, profilePicture, fuzzySearchName, insertFriendRequest, getPendingRequestsCount, getPendingRequests, rejectRequest, acceptRequest, getFriends, removeFriend, getFriendEmails, editUser, updatePassword, generatePasswordResetToken, updatePasswordForgotten, verifyAccess, getProfilePicture };

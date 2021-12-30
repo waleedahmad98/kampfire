@@ -23,7 +23,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(process.cwd() + '/storage/sharedpictures'));
+app.use('/profilePictures', express.static(process.cwd() + '/storage/profilepictures'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
