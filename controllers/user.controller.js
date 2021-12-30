@@ -154,7 +154,7 @@ const acceptRequest = async (email, from) => {
         })
     }
     else {
-        let temp = resp;
+        let temp = resp.friends;
         if (temp.includes(from) === false) {
             temp.push(from);
             await friendModel.updateOne({ email: email }, { friends: temp });

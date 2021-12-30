@@ -147,7 +147,7 @@ router.get("/details/profile/:email/:useremail", async function (req, res){
   if (stat.code === "1"){
     let image = await userController.getProfilePicture(req.params["useremail"]);
     let user = await userController.getUser(req.params["useremail"])
-    let temp = [req.params["email"]];
+    let temp = [req.params["useremail"]];
     let posts = await postController.getMainPosts(temp);
     let resp = {"user":user, "image":image, "posts":posts}
     res.send(resp);
