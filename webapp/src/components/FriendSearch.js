@@ -11,7 +11,7 @@ export default function FriendSearch() {
         if (e.target.value !== "") {
             axios.get(`/api/users/${e.target.value}`).then((res) => {
                 let arr = res.data.filter(function(item) {
-                    return item !== localStorage.getItem("userEmail");
+                    return item.email !== localStorage.getItem("userEmail");
                 })
                 setResults(arr);
             })
@@ -20,6 +20,7 @@ export default function FriendSearch() {
 
     const sendFriendRequest = (r) => {
         axios.post(`/api/users/freq`, {email: localStorage.getItem("userEmail"), to: r.email, token: localStorage.getItem("accessToken") });
+        alert("Friend Request Sent!")
     }
 
     return (

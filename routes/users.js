@@ -150,7 +150,6 @@ router.get("/details/profile/:email/:useremail", async function (req, res){
     let temp = [req.params["email"]];
     let posts = await postController.getMainPosts(temp);
     let resp = {"user":user, "image":image, "posts":posts}
-
     res.send(resp);
   }
   else
