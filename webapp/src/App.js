@@ -26,8 +26,9 @@ function App() {
 
   return (
     <div className="h-100">
-      {login === true ? <MainPage /> : <LoginPage setLogin = {setLogin} />}
-      
+      { login === null ? <></> : <></> }
+      { login === true ? <MainPage /> : <></> }
+      { login === false ? <LoginPage setLogin={setLogin} /> : <></> }
     </div>
   );
 }

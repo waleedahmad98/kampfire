@@ -175,7 +175,7 @@ const getFriends = async (email) => {
 
 const getFriendEmails = async (email) => {
     let resp = await friendModel.findOne({ email: email }, 'friends');
-    return resp.friends
+    return resp ? resp.friends : [];
 }
 
 const removeFriend = async (email1, email2) => {
