@@ -27,19 +27,19 @@ export default function FriendSearch() {
         <div>
             <div className='post-creator-container py-4 px-4 mt-3 mx-auto'>
                 <form>
-                    <div class="mb-3 mt-3">
-                        <input type="text" placeholder='Find more kampers...' class="form-control" id="search" onChange={searcher} />
+                    <div className="mb-3 mt-3">
+                        <input type="text" placeholder='Find more kampers...' className="form-control" id="search" onChange={searcher} />
                     </div>
                 </form>
             </div>
 
             <div className='post-creator-container py-4 px-4 mt-3 mx-auto'>
                 {results.length > 0 ? results.map(r => (
-                    <div class="card mb-2" style={{ width: "100%" }}>
+                    <div className="card mb-2" style={{ width: "100%" }}>
                         <div className='d-flex flex-row'>
-                            <div class="card-body">
-                                <h5 class="card-title">{r.fullname}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">{r.email}</h6>
+                            <div className="card-body">
+                                <h5 className="card-title">{r.fullname}</h5>
+                                <h6 className="card-subtitle mb-2 text-muted">{r.email}</h6>
                             </div>
                             <button className='btn btn-primary mx-2 my-2' onClick = {()=>{
                                 sendFriendRequest(r)

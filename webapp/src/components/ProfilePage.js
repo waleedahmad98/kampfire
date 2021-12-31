@@ -87,11 +87,11 @@ export default function ProfilePage() {
                         <div className='row mt-4'>
                             <div className='d-flex flex-row justify-content-around' style={{ fontFamily: "open-s-med" }}>
                                 <div className='d-flex flex-row align-items-center'>
-                                    <i class="fas fa-at me-2"></i>
+                                    <i className="fas fa-at me-2"></i>
                                     <span>{email}</span>
                                 </div>
                                 <div className='d-flex flex-row align-items-center'>
-                                    <i class="fas fa-birthday-cake me-2"></i>
+                                    <i className="fas fa-birthday-cake me-2"></i>
                                     <span>{dob}</span>
                                 </div>
                                 <div className='d-flex flex-row align-items-center'>

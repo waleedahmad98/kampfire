@@ -34,12 +34,12 @@ export default function ResetPassword() {
     return (
         <div className='container'>
             <form onSubmit={handleSubmit} className='ms-5 me-5 mt-5 w-75'>
-                <div class="mb-3 mt-3">
-                    <label for="password" class="form-label">New Password</label>
-                    <input type="password" class="form-control" id="password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                <div className="mb-3 mt-3">
+                    <label htmlFor="password" className="form-label">New Password</label>
+                    <input type="password" className="form-control" id="password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
                 </div>
                 <p style={{ fontFamily: "arial", fontSize: "small", color: modalMessage.color }}>{modalMessage.text}</p>
-                <button type="submit" class="btn btn-success">Update</button>
+                <button type="submit" className="btn btn-success">Update</button>
             </form>
         </div>
     )

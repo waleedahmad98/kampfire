@@ -68,40 +68,40 @@ export default class Signup extends Component {
                 <form className="credentialform mt-5" onSubmit={this.handleSubmit}>
                     {extraCred === 0 ?
                         <>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" name="email" onChange={this.handleChange} class="form-control" id="email" />
+                            <div className="mb-3">
+                                <label htmlFor="email" className="form-label">Email</label>
+                                <input type="email" name="email" onChange={this.handleChange} className="form-control" id="email" />
 
                             </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" name="password" onChange={this.handleChange} class="form-control" id="password" />
+                            <div className="mb-3">
+                                <label htmlFor="password" className="form-label">Password</label>
+                                <input type="password" name="password" onChange={this.handleChange} className="form-control" id="password" />
                             </div>
-                            <div class="mb-3">
-                                <label for="cfpassword" class="form-label">Confirm Password</label>
-                                <input type="password" name="cfpassword" onChange={this.handleChange} class="form-control" id="cfpassword" />
+                            <div className="mb-3">
+                                <label htmlFor="cfpassword" className="form-label">Confirm Password</label>
+                                <input type="password" name="cfpassword" onChange={this.handleChange} className="form-control" id="cfpassword" />
                             </div>
                         </>
                         :
                         <>
-                            <div class="mb-3">
-                                <label for="fname" class="form-label">First Name</label>
-                                <input type="text" name="fname" onChange={this.handleChange} class="form-control" id="fname" />
+                            <div className="mb-3">
+                                <label htmlFor="fname" className="form-label">First Name</label>
+                                <input type="text" name="fname" onChange={this.handleChange} className="form-control" id="fname" />
 
                             </div>
-                            <div class="mb-3">
-                                <label for="lname" class="form-label">Last Name</label>
-                                <input type="text" name="lname" onChange={this.handleChange} class="form-control" id="lname" />
+                            <div className="mb-3">
+                                <label htmlFor="lname" className="form-label">Last Name</label>
+                                <input type="text" name="lname" onChange={this.handleChange} className="form-control" id="lname" />
                             </div>
-                            <div class="mb-3">
-                                <label for="birthday">Birthday:</label>
+                            <div className="mb-3">
+                                <label htmlFor="birthday">Birthday:</label>
                                 <input type="date" id="dob" name="dob" />
                             </div>
                         </>
                     }
 
 
-                    <button type="submit" class="btn">Submit</button>
+                    <button type="submit" className="btn">Submit</button>
                 </form>
             </div>
 

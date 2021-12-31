@@ -33,16 +33,16 @@ export default function CreatePost() {
     return (
         <div className='post-creator-container py-4 px-4 mt-3 mx-auto'>
             <form onSubmit={handleSubmit}>
-                <div class="mb-3 mt-3">
+                <div className="mb-3 mt-3">
                     <textarea placeholder='Share your story!' class="form-control" id="textbox" onChange={(e)=>{setText(e.target.value)}}/>
                 </div>
 
-                <div class="form-group mb-3">
-                    <label for="image" className='smallbtn'><i className='fas fa-paperclip'></i> {image === null ? "" : image.name} </label>
-                    <input type="file" class="form-control-file" id="image" style={{display: "none"}} onChange={(e)=>{setImage(e.target.files[0])}} accept="image/png, image/jpeg"/>
+                <div className="form-group mb-3">
+                    <label htmlFor="image" className='smallbtn'><i className='fas fa-paperclip'></i> {image === null ? "" : image.name} </label>
+                    <input type="file" className="form-control-file" id="image" style={{display: "none"}} onChange={(e)=>{setImage(e.target.files[0])}} accept="image/png, image/jpeg"/>
                 </div>
 
-                <button type="submit" class="btn" style={{ backgroundColor: "rgb(255, 123, 0)", color: 'white' }}>Share</button>
+                <button type="submit" className="btn" style={{ backgroundColor: "rgb(255, 123, 0)", color: 'white' }}>Share</button>
             </form>
         </div>
     )

@@ -81,34 +81,34 @@ export default class Signup extends Component {
                 <form className="credentialform mt-5" onSubmit={this.handleSubmit}>
                     {this.state.extraCred === 0 ?
                         <>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" name="email" onChange={this.handleChange} value={this.state.email} class="form-control" id="email" />
+                            <div className="mb-3">
+                                <label htmlFor="email" className="form-label">Email</label>
+                                <input type="email" name="email" onChange={this.handleChange} value={this.state.email} className="form-control" id="email" />
 
                             </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" name="password" onChange={this.handleChange} value={this.state.password} class="form-control" id="password" />
+                            <div className="mb-3">
+                                <label htmlFor="password" className="form-label">Password</label>
+                                <input type="password" name="password" onChange={this.handleChange} value={this.state.password} className="form-control" id="password" />
                             </div>
-                            <div class="mb-3">
-                                <label for="cfpassword" class="form-label">Confirm Password</label>
-                                <input type="password" name="cfpassword" onChange={this.handleChange} value={this.state.cfpassword} class="form-control" id="cfpassword" />
+                            <div className="mb-3">
+                                <label htmlFor="cfpassword" className="form-label">Confirm Password</label>
+                                <input type="password" name="cfpassword" onChange={this.handleChange} value={this.state.cfpassword} className="form-control" id="cfpassword" />
                             </div>
                         </>
                         :
                         <>
-                            <div class="mb-3">
-                                <label for="fname" class="form-label">First Name</label>
-                                <input type="text" name="fname" onChange={this.handleChange} value={this.state.fname} class="form-control" id="fname" />
+                            <div className="mb-3">
+                                <label htmlFor="fname" className="form-label">First Name</label>
+                                <input type="text" name="fname" onChange={this.handleChange} value={this.state.fname} className="form-control" id="fname" />
 
                             </div>
-                            <div class="mb-3">
-                                <label for="lname" class="form-label">Last Name</label>
-                                <input type="text" name="lname" onChange={this.handleChange} value={this.state.lname} class="form-control" id="lname" />
+                            <div className="mb-3">
+                                <label htmlFor="lname" className="form-label">Last Name</label>
+                                <input type="text" name="lname" onChange={this.handleChange} value={this.state.lname} className="form-control" id="lname" />
                             </div>
-                            <div class="mb-3">
-                                <label for="birthday" class="form-label">Birthday</label>
-                                <input type="date" id="dob" name="dob" onChange={this.handleChange} class="form-control" />
+                            <div className="mb-3">
+                                <label htmlFor="birthday" className="form-label">Birthday</label>
+                                <input type="date" id="dob" name="dob" onChange={this.handleChange} className="form-control" />
                             </div>
                         </>
                     }

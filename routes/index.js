@@ -52,7 +52,7 @@ router.post('/', async function (req, res) {
 router.post('/gauth/signin', async function (req, res) {
   await userController.createUser(req.body.email, req.body.fname, req.body.lname, null, null, null);
   accessToken = jwt.sign(req.body.email, process.env.SECRET_KEY);
-  await userController.authorizeLoginSession(req.body.email, accessToken);
+  await userController.verifyLoginSession(req.body.email, accessToken);
   res.send({ email: req.body.email, token: accessToken });
 });
 

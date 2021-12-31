@@ -64,16 +64,16 @@ export default class Signin extends Component {
                 </div>
                 <div>
                     <form className="credentialform mt-5" onSubmit={this.handleSubmit}>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" name="email" value={this.state.email} onChange={this.handleChange} class="form-control" id="email" />
+                        <div className="mb-3">
+                            <label htmlFor="email" className="form-label">Email</label>
+                            <input type="email" name="email" value={this.state.email} onChange={this.handleChange} className="form-control" id="email" />
                         </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" name="password" value={this.state.password} onChange={this.handleChange} class="form-control" id="password" />
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Password</label>
+                            <input type="password" name="password" value={this.state.password} onChange={this.handleChange} className="form-control" id="password" />
                         </div>
 
-                        <div class="mb-3">
+                        <div className="mb-3">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#modalform">
                                 Forgot your password?</a>
                         </div>
@@ -85,23 +85,23 @@ export default class Signin extends Component {
 
                     </form>
 
-                    <div class="modal fade" id="modalform" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Forgot Password</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div className="modal fade" id="modalform" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="staticBackdropLabel">Forgot Password</h5>
+                                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
-                                    <div class="mb-3">
-                                        <label for="forgotten_email" class="form-label">Enter Email</label>
-                                        <input type="text" class="form-control" name = "forgotten_email" id="forgotten_email" value={this.state.forgotten_email} onChange={this.handleChange} />
+                                <div className="modal-body">
+                                    <div className="mb-3">
+                                        <label htmlFor="forgotten_email" className="form-label">Enter Email</label>
+                                        <input type="text" className="form-control" name = "forgotten_email" id="forgotten_email" value={this.state.forgotten_email} onChange={this.handleChange} />
                                     </div>
                                     <p style={{ fontFamily: "arial", fontSize: "small", color: this.state.modalMessage.color }}>{this.state.modalMessage.text}</p>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-primary" onClick={this.forgottenPassword}>Continue</button>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="button" className="btn btn-primary" onClick={this.forgottenPassword}>Continue</button>
                                 </div>
                             </div>
                         </div>
