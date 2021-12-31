@@ -21,7 +21,7 @@ export default function Post(props) {
         return props.data.likes.length
     })
     const likePost = (p) => {
-        if (like.props.class === "far fa-thumbs-up") {
+        if (like.props.className === "far fa-thumbs-up") {
             axios.put(`/api/posts/likes/${localStorage.getItem("userEmail")}/${p._id}`, { headers: { "Authorization": localStorage.getItem("accessToken") } }).then(res => {
                 setLike(<i className="fas fa-thumbs-up"></i>)
                 setLikeCount(likeCount + 1)
