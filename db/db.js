@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        const con = await mongoose.connect(`${process.env.MONGO_ATLAS_URL}${process.env.ATLAS_DATABASE_NAME}`, { 
+        const con = await mongoose.connect(`${process.env.MONGO_URL}${process.env.DATABASE_NAME}`, { 
         useNewUrlParser: true,
         useUnifiedTopology: true
     });

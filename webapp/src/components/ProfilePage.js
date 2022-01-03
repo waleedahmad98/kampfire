@@ -22,7 +22,11 @@ export default function ProfilePage() {
             setUser(res.data.data)
             setName(res.data.data.firstname + " " + res.data.data.lastname);
             setEmail(res.data.data.email);
-            setDob(res.data.data.dob.toString().split('T')[0]);
+            if (res.data.data.dob === null){
+                setDob("")
+            }
+            else
+                setDob(res.data.data.dob.toString().split('T')[0]);
         }).catch(err => {
             alert(err)
             navigate('/');
