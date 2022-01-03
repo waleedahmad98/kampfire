@@ -13,6 +13,7 @@ Clone the project and run `npm install` in the root and the ./webapp folder:
 - Token encryption using jsonwebtoken
 - Password hashing with salt using bcryptjs
 - Fuzzy Searching using mongoose-fuzzy-searching
+- Google Authentication using react-google-login
 - Basic social media network features
 
 ## Screenshots
